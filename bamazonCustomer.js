@@ -65,10 +65,52 @@ function buyProduct() {
                     var chosenItem = res[i];
                 }
             }
-            
+             // shows the entire object of the product chosen
+            // console.log(chosenItem);
+                             
+            // calculate remaining stock if purchase occurs
+            var updateStock = parseInt(chosenItem.stockquntity) - parseInt(answer.quantity);
+
+            // if customer wants to purchase more than available in stock, user will be asked if he wants to make another purchase
+            if (chosenItem.stockquntity < parseInt(answer.quantity)) {
+                console.log("Insufficient quantity!");
+
+                again();
+            }
+            // if the customer wants to purchase an amount that is in stock, the remaining stock quantity will be updated in the database and the price presented to the customer
+            else {
+                connection.query("UPDATE Products SET ? WHERE ?", [{stockquntity: updateStock}, {itemid: chosenItem.itemid}], function(err, res) {
+                    console.log("Purchase successful!");
+
+                    var Total = (parseInt(answer.quantity)*chosenItem.price).toFixed(2);
+                    console.log("Your total is $" + Total);
+
+                    again();
+                });
+            }
 
         }); // .then of inquirer prompt
                          
     }); // first connection.query of the database
     
 } // buyProduct function
+
+
+
+
+function again() {
+    inquirer.prompt({
+        // ask user if he wants to purchase another item
+        name: "repurchase",
+        type: "list",
+        choices: ["Yes", "No"],
+        message: "Would you like to purchase another item?"
+    }).then(function(answer) {
+        if (answer.repurchase == "Yes") {
+            buyProduct();
+        }
+        else {
+            console.log("Thanks for shopping with us. Have a great day!")
+        }
+    });
+}

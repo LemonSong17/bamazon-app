@@ -1,1 +1,5 @@
 # bamazon-app
+
+When the app begins the customer is shown the entire inventory. The customer is able to move up and down on the list of products and select what item they're looking to buy and the quantity of that item. After making a purhcase the customer is presented the total amount of money owed. Afterwards they're asked if they would like to make another purhcase. If they select yes than the table is loaded again and the inventory is decreased by whatever item was previously purchased. If, for whatever reason, the custom decides to purchase more quantity of a given item than what's available than they get the message "Insufficant quantity!". After this message, the customer is asked if they would make another purchase again. If they're done shopping than they're give the message, "Thanks for shopping with us. Have a great day!".
+
+![GitHub Logo](img\pic1.png)
